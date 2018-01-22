@@ -13,7 +13,7 @@ require_relative '../exercise_verification'
 # screen.
 
 response = HttpConnection.get('/')
-puts # <fill this in>
+puts JSON.parse(response)["message"]
 
 
 ##################################################
