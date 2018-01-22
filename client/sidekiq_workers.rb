@@ -16,6 +16,6 @@ class GetRequestSender
     response = HttpConnection.get(query)
     puts JSON.parse(response)["message"]
 
-    GetRequestSender.perform_async(path, params) unless response.code == 200
+    raise unless response.code == 200
   end
 end
