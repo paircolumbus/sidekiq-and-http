@@ -26,15 +26,14 @@ puts JSON.parse(response)["message"]
 
 numbers = []
 loop do
-  parsed_response = JSON.parse(HttpConnection.get('/number'))
-  numbers << parsed_response["number"]
-  break if parsed_response["stop_asking"] == true
+  response = HttpConnection.get('/number')
+  numbers << JSON.parse(response)["number"]
+  break if JSON.parse(response)["stop_asking"] == true
 end
 
-puts numbers
-
 sum = numbers.reduce(:+)
-puts HttpConnection.post('/sum', :body => { "the_sum" => sum})
+response = HttpConnection.post('/sum', :body => { "the_sum" => sum})
+puts JSON.parse(response)["message"]
 
 ##################################################
 # Exercise 3: Introducing sidekiq
