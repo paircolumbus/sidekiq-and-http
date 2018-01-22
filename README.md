@@ -51,4 +51,4 @@ When you're done, kill off everything with `ctrl-C`.
 ## Resources
 - [Homebrew: MacOS package manager](https://brew.sh/)
 - [Redis Documentation](https://redis.io/)
-- [Sidekiq])(https://github.com/mperham/sidekiq/wiki)
+- [Sidekiq](https://github.com/mperham/sidekiq/wiki)
