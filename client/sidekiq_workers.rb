@@ -13,10 +13,9 @@ class GetRequestSender
       query += "&#{k}=#{v}"
     end
 
-    response = JSON.parse(HttpConnection.get(query))
-    puts response["message"]
+    response = HttpConnection.get(query)
+    puts JSON.parse(response)["message"]
 
-    # For exercise 5, replace this comment with code that
-    # retries the request if it fails
+    GetRequestSender.perform_async(path, params) unless response.code == 200
   end
 end

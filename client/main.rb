@@ -82,7 +82,7 @@ verify_ex_4!
 #
 # (Remember to restart sidekiq after editing the file.)
 
-# <code goes here>
+GetRequestSender.perform_async('/touchy')
 
 verify_ex_5! # This can take up to 30 seconds
 
