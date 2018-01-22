@@ -21,7 +21,7 @@ puts # <fill this in>
 # The server has a big list of numbers.  But it's not very good at math :-(, and
 # it was hoping you could maybe help it sum them up.  
 # A. Send GET requests to /number until it tells you you've got them all.
-# B. Send a POST to /sum with 'sum: <the sum>' as a parameter in the post body.
+# B. Send a POST to /sum with 'the_sum: <the sum>' as a parameter in the post body.
 # C. Use `puts` to print the message portion of the response to the screen.
 
 numbers = []
