@@ -8,9 +8,6 @@ class GetRequestSender
   sidekiq_retry_in { 0 }
 
   def perform(path, params={})
-    # For exercise 3, replace this comment with code that
-    # sends the request, parses the response, and uses `puts` to 
-    # print the message part of the response
     query = path + "?"
     params.each do |k,v|
       query += "&#{k}=#{v}"
