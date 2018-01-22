@@ -21,11 +21,20 @@ puts JSON.parse(response)["message"]
 # The server has a big list of numbers.  But it's not very good at math :-(, and
 # it was hoping you could maybe help it sum them up.  
 # A. Send GET requests to /number until it tells you you've got them all.
-# B. Send a POST to /sum with 'sum: <the sum>' as a parameter in the post body.
+# B. Send a POST to /sum with 'the_sum: <sum>' as a parameter in the post body.
 # C. Use `puts` to print the message portion of the response to the screen.
 
 numbers = []
-# <replace this with your code!>
+loop do
+  parsed_response = JSON.parse(HttpConnection.get('/number'))
+  numbers << parsed_response["number"]
+  break if parsed_response["stop_asking"] == true
+end
+
+puts numbers
+
+sum = numbers.reduce(:+)
+puts HttpConnection.post('/sum', :body => { "the_sum" => sum})
 
 ##################################################
 # Exercise 3: Introducing sidekiq
