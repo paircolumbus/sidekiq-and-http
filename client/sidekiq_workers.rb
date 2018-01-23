@@ -8,11 +8,10 @@ class GetRequestSender
   sidekiq_retry_in { 0 }
 
   def perform(path, params={})
-    # For exercise 3, replace this comment with code that
-    # sends the request, parses the response, and uses `puts` to 
-    # print the message part of the response
+    path += '?' + params.map { |k,v| "#{k}=#{v}" }.join('&')
+    response = HttpConnection.get(path)
+    puts JSON.parse(response)['message']
 
-    # For exercise 5, replace this comment with code that
-    # retries the request if it fails
+    raise unless response.code == 200
   end
 end
