@@ -8,11 +8,14 @@ class GetRequestSender
   sidekiq_retry_in { 0 }
 
   def perform(path, params={})
-    # For exercise 3, replace this comment with code that
-    # sends the request, parses the response, and uses `puts` to 
-    # print the message part of the response
-
-    # For exercise 5, replace this comment with code that
-    # retries the request if it fails
+    begin
+      response = HttpConnection.get(path, query: params)
+      parsed_response = JSON.parse(response)
+      puts parsed_response['message']
+      # The statement below is included because it was sending requests to
+      # the server so fast that verify_ex_5! didn't say "Exercise 5 complete!"
+      # This is because the process was completed when it entered the method.
+      sleep 1
+    end until response.code == 200
   end
 end
