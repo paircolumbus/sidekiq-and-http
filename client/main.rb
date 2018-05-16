@@ -13,8 +13,7 @@ require_relative '../exercise_verification'
 # screen.
 
 response = HttpConnection.get('/')
-puts # <fill this in>
-
+puts JSON.parse(response)["message"]
 
 ##################################################
 # Exercise 2: Extended interaction with a server
@@ -25,7 +24,17 @@ puts # <fill this in>
 # C. Use `puts` to print the message portion of the response to the screen.
 
 numbers = []
-# <replace this with your code!>
+
+loop do
+  number_response = JSON.parse(HttpConnection.get('/number'))
+  numbers << number_response["number"]
+  break if number_response["stop_asking"] == true
+end
+
+numbers_sum = numbers.reduce{|a, b| a + b}
+message = HttpConnection.post('/sum', :body => {:the_sum => numbers_sum})
+
+puts JSON.parse(message)["message"]
 
 ##################################################
 # Exercise 3: Introducing sidekiq
@@ -57,8 +66,11 @@ GetRequestSender.new.perform('/i_am_making_requests', by_using: 'a_sidekiq_worke
 #  - Question to think about: why does all of this have to be this way?
 
 # <insert first call here>
+GetRequestSender.perform_async('/the_hard_stuff', by_using: 'a_sidekiq_worker!')
 sleep 0.1
+
 # <insert second call here>
+GetRequestSender.perform_async('/the_easy_stuff', by_using: 'a_sidekiq_worker!')
 
 verify_ex_4!
 
@@ -75,6 +87,7 @@ verify_ex_4!
 # (Remember to restart sidekiq after editing the file.)
 
 # <code goes here>
+GetRequestSender.perform_async('/touchy', by_using: 'a_sidekiq_worker!')
 
 verify_ex_5! # This can take up to 30 seconds
 

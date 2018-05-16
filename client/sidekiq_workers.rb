@@ -11,8 +11,14 @@ class GetRequestSender
     # For exercise 3, replace this comment with code that
     # sends the request, parses the response, and uses `puts` to 
     # print the message part of the response
+    response = HttpConnection.get(path, :query => params)
+    puts JSON.parse(response)["message"]
 
     # For exercise 5, replace this comment with code that
     # retries the request if it fails
+    if response.code != 200
+      sleep 1
+      perform(path, params)
+    end
   end
 end
