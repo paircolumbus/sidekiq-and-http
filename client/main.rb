@@ -13,7 +13,7 @@ require_relative '../exercise_verification'
 # screen.
 
 response = HttpConnection.get('/')
-puts # <fill this in>
+puts JSON.parse(response)["message"]
 
 
 ##################################################
@@ -24,8 +24,17 @@ puts # <fill this in>
 # B. Send a POST to /sum with 'the_sum: <the sum>' as a parameter in the post body.
 # C. Use `puts` to print the message portion of the response to the screen.
 
-numbers = []
-# <replace this with your code!>
+sum=0
+loop do
+	response = HttpConnection.get('/number')
+	response = JSON.parse(response)
+	sum += response["number"]
+	break if response["stop_asking"]
+end
+
+response = HttpConnection.post('/sum',body: {'the_sum': sum})
+puts JSON.parse(response)["message"]
+
 
 ##################################################
 # Exercise 3: Introducing sidekiq
@@ -56,9 +65,9 @@ GetRequestSender.new.perform('/i_am_making_requests', by_using: 'a_sidekiq_worke
 #    Instead, it'll appear in the sidekiq terminal.
 #  - Question to think about: why does all of this have to be this way?
 
-# <insert first call here>
+GetRequestSender.perform_async('/the_hard_stuff')
 sleep 0.1
-# <insert second call here>
+GetRequestSender.perform_async('/the_easy_stuff')
 
 verify_ex_4!
 
@@ -74,7 +83,7 @@ verify_ex_4!
 #
 # (Remember to restart sidekiq after editing the file.)
 
-# <code goes here>
+GetRequestSender.new.perform('/touchy')
 
 verify_ex_5! # This can take up to 30 seconds
 
