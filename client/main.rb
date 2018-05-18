@@ -35,7 +35,7 @@ until received.include? 'true' do
 end
 
 sum = 0
-numbers.each { |a| sum+=a }
+#numbers.each { |a| sum+=a }
 sum = numbers.reduce(:+)
 
 post_response = HttpConnection.post('/sum', {body: {the_sum: sum}})
